@@ -1,0 +1,79 @@
+/* ---------- Navbar look ---------- */
+.landing-navbar {
+  background: #0b1220;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.landing-navbar .navbar-brand {
+  letter-spacing: 0.3px;
+}
+
+.landing-navbar .nav-link {
+  opacity: 0.9;
+}
+
+.landing-navbar .nav-link:hover,
+.landing-navbar .nav-link:focus {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* Dropdown button */
+.landing-profile-btn {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.landing-profile-btn:hover,
+.landing-profile-btn:focus {
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+
+.icon-circle {
+  border-radius: 9999px;
+  background: #111827;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-circle-lg {
+  width: 48px;
+  height: 48px;
+}
+
+.icon-circle-md {
+  width: 44px;
+  height: 44px;
+}
+
+
+.rtl-carousel {
+  direction: rtl;
+}
+
+.rtl-carousel .carousel-inner {
+  direction: rtl;
+}
+
+
+.rtl-carousel .carousel-control-prev {
+  left: auto;
+  right: 0;
+}
+
+.rtl-carousel .carousel-control-next {
+  right: auto;
+  left: 0;
+}
+
+
+.testimonial-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
