@@ -1,0 +1,73 @@
+/* Page layout */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+}
+
+/* Column sizing */
+.login-col {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* Card */
+.login-card {
+  border: none;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+}
+
+.login-card-body {
+  padding: 2rem;
+}
+
+/* Header */
+.login-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.login-icon {
+  font-size: 1.75rem;
+}
+
+.login-title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+/* Form spacing */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Password rules */
+.password-rules {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.password-rules ul {
+  margin-bottom: 0;
+  padding-left: 1.25rem;
+}
+
+/* Footer */
+.login-footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin-top: 1rem;
+}

@@ -9,120 +9,125 @@ import { AuthService } from '../auth.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
-  <div class="min-vh-100 d-flex align-items-center bg-light">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 col-sm-10 col-md-8 col-lg-5">
-          <div class="card shadow-sm border-0 rounded-4">
-            <div class="card-body p-4 p-md-5">
-              <div class="d-flex align-items-center gap-2 mb-3">
-                <i class="bi bi-shield-lock fs-3"></i>
-                <div>
-                  <h1 class="h4 mb-0">Welcome back</h1>
-                  <small class="text-muted">Sign in to access your dashboard</small>
-                </div>
-              </div>
+    <div class="login-page">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="login-col">
+            <div class="card login-card">
+              <div class="card-body login-card-body">
 
-              <form [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
-                <div class="mb-3">
-                  <label class="form-label">Email</label>
-                  <input class="form-control" type="email" formControlName="email" placeholder="name@gmail.com" />
-                  <div class="text-danger small mt-1" *ngIf="emailInvalid()">
-                    Please enter a valid email.
+                <div class="login-header">
+                  <i class="bi bi-shield-lock login-icon"></i>
+                  <div>
+                    <h1 class="login-title">Welcome back</h1>
+                    <small class="text-muted">Sign in to access your dashboard</small>
                   </div>
                 </div>
 
-                <div class="mb-2">
-                  <label class="form-label">Password</label>
-                  <input class="form-control" type="password" formControlName="password" placeholder="••••••••" />
-                  <div class="text-danger small mt-1" *ngIf="passwordInvalid()">
-                    Password must be 7+ chars, include 1 uppercase, 1 number, and be letters/numbers only.
-                  </div>
-                </div>
+                <form [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
 
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember" />
-                    <label class="form-check-label" for="remember">Remember me</label>
+                  <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input class="form-control" type="email" formControlName="email" placeholder="name@gmail.com" />
+                    <div class="text-danger small" *ngIf="emailInvalid()">
+                      Please enter a valid email.
+                    </div>
                   </div>
 
-                  <button type="button" class="btn btn-link px-0" (click)="openForgot()">
-                    Forgot password?
+                  <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input class="form-control" type="password" formControlName="password" placeholder="••••••••" />
+                    <div class="text-danger small" *ngIf="passwordInvalid()">
+                      Password must be 7+ chars, include 1 uppercase, 1 number, and be letters/numbers only.
+                    </div>
+                  </div>
+
+                  <div class="login-options">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="remember" />
+                      <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+
+                    <button type="button" class="btn btn-link p-0" (click)="openForgot()">
+                      Forgot password?
+                    </button>
+                  </div>
+
+                  <button class="btn btn-primary w-100 py-2" [disabled]="form.invalid || loading()">
+                    {{ loading() ? 'Logging in…' : 'Login' }}
                   </button>
-                </div>
 
-                <button class="btn btn-primary w-100 py-2" [disabled]="form.invalid || loading()">
-                  <span *ngIf="!loading()">Login</span>
-                  <span *ngIf="loading()">Logging in...</span>
-                </button>
+                  <div class="alert alert-danger mt-3" *ngIf="error()">{{ error() }}</div>
+                  <div class="alert alert-success mt-3" *ngIf="success()">{{ success() }}</div>
 
-                <div class="alert alert-danger mt-3 mb-0" *ngIf="error()">
-                  {{ error() }}
-                </div>
-                <div class="alert alert-success mt-3 mb-0" *ngIf="success()">
-                  {{ success() }}
-                </div>
+                  <hr class="my-4" />
 
-                <hr class="my-4" />
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary w-100"
+                    (click)="onSignup()"
+                    [disabled]="form.invalid || loading()">
+                    Create account
+                  </button>
 
-                <div class="text-center text-muted small">
-                  Don’t have an account?
-                </div>
-
-                <button type="button" class="btn btn-outline-secondary w-100 mt-2" (click)="onSignup()"
-                        [disabled]="form.invalid || loading()">
-                  Create account
-                </button>
-
-                <div class="text-muted small mt-3">
-                  <strong>Password rules:</strong>
-                  <ul class="mb-0">
-                    <li>7+ characters</li>
-                    <li>At least 1 uppercase letter</li>
-                    <li>At least 1 number</li>
-                    <li>Letters/numbers only</li>
-                  </ul>
-                </div>
-              </form>
+                  <div class="password-rules">
+                    <strong>Password rules:</strong>
+                    <ul>
+                      <li>7+ characters</li>
+                      <li>At least 1 uppercase letter</li>
+                      <li>At least 1 number</li>
+                      <li>Letters/numbers only</li>
+                    </ul>
+                  </div>
+                </form>
+              </div>
             </div>
+
+            <p class="login-footer">
+              © {{ year }} Your App • Secure sign-in
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal fade" id="forgotModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4">
+          <div class="modal-header">
+            <h5 class="modal-title">Reset password</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
 
-          <p class="text-center text-muted small mt-3 mb-0">
-            © {{ year }} Your App • Secure sign-in
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+          <div class="modal-body">
+            <p class="text-muted">
+              Enter your email and we’ll send a password reset link.
+            </p>
 
-  <!-- Forgot Password Modal (Bootstrap) -->
-  <div class="modal fade" id="forgotModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content rounded-4">
-        <div class="modal-header">
-          <h5 class="modal-title">Reset password</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p class="text-muted mb-3">
-            Enter your email and we’ll send a password reset link.
-          </p>
-          <input class="form-control" type="email" [value]="form.value.email || ''"
-                 (input)="forgotEmail = ($any($event.target).value)" placeholder="name@gmail.com" />
-          <div class="text-danger small mt-2" *ngIf="forgotError()">{{ forgotError() }}</div>
-          <div class="text-success small mt-2" *ngIf="forgotSuccess()">{{ forgotSuccess() }}</div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button class="btn btn-primary" (click)="sendReset()" [disabled]="loadingReset()">
-            <span *ngIf="!loadingReset()">Send link</span>
-            <span *ngIf="loadingReset()">Sending...</span>
-          </button>
+            <input
+              class="form-control"
+              type="email"
+              [value]="form.value.email || ''"
+              (input)="forgotEmail = ($any($event.target).value)"
+              placeholder="name@gmail.com"
+            />
+
+            <div class="text-danger small mt-2" *ngIf="forgotError()">{{ forgotError() }}</div>
+            <div class="text-success small mt-2" *ngIf="forgotSuccess()">{{ forgotSuccess() }}</div>
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" (click)="sendReset()" [disabled]="loadingReset()">
+              {{ loadingReset() ? 'Sending…' : 'Send link' }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   `,
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   year = new Date().getFullYear();
@@ -139,7 +144,7 @@ export class LoginComponent {
   // 7+ chars, 1 uppercase, 1 number, alphanumeric only
   private passwordPattern = /^(?=.*[A-Z])(?=.*\d)[A-Za-z0-9]{7,}$/;
 
-  form: ReturnType<FormBuilder['group']>;
+  form!: ReturnType<FormBuilder['group']>;
 
   constructor(
     private fb: FormBuilder,
@@ -150,13 +155,18 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern(this.passwordPattern)]],
     });
+
+    // ✅ If already logged in, don't show login page
+    if (this.auth.isLoggedIn()) {
+      this.router.navigateByUrl('/landing');
+    }
   }
 
   emailInvalid() {
     const c = this.form.controls['email'];
     return c.touched && c.invalid;
   }
-  
+
   passwordInvalid() {
     const c = this.form.controls['password'];
     return c.touched && c.invalid;
@@ -173,7 +183,15 @@ export class LoginComponent {
       const email = String(this.form.value.email ?? '').trim();
       const password = String(this.form.value.password ?? '');
 
+      // ✅ This must set whatever AuthService uses for isLoggedIn()
       await this.auth.login(email, password);
+
+      // Optional: if your AuthService stores email separately
+      if ((this.auth as any).setEmail) {
+        (this.auth as any).setEmail(email);
+      }
+
+      // ✅ Go to landing (guard will allow if isLoggedIn() is true)
       this.router.navigateByUrl('/landing');
     } catch (e: any) {
       this.error.set(e?.message ?? 'Login failed');
@@ -194,6 +212,9 @@ export class LoginComponent {
       const password = String(this.form.value.password ?? '');
 
       await this.auth.signup(email, password);
+
+      // You can either auto-login after signup OR ask them to login.
+      // Here we keep your current behavior:
       this.success.set('Account created. You can now log in.');
     } catch (e: any) {
       this.error.set(e?.message ?? 'Signup failed');
@@ -237,6 +258,8 @@ export class LoginComponent {
     }
   }
 }
+
+
 
 
 
